@@ -7,6 +7,7 @@ const app = express();
 
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const roomsRouter = require('./routes/rooms');
 
 app.use(cors());
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use(express.json());
 // Use the users routes
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/rooms', roomsRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello, there!')
