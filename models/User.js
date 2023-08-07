@@ -40,12 +40,18 @@ UserSchema.pre('save', function (next) {
 });
 
 // Method to compare password for login
-UserSchema.method.comparePassword = function (pw, cb) {
-    bcrypt.compare(pw, this.password, function (err, isMatch) {
-        if (err) {
-            return cb(err);
-        }
-        cb(null, isMatch);
+UserSchema.methods.comparePassword = function (pw) {
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(pw, this.password, (err, isMatch) => {
+            if (err) {
+                reject(err);
+            } else {
+                console.log("Entered Password:", pw);
+                console.log("Stored Password:", this.password);
+                console.log("Password Match:", isMatch);
+                resolve(isMatch);
+            }
+        });
     });
 };
 

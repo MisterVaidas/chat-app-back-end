@@ -6,12 +6,14 @@ require('dotenv').config();
 const app = express();
 
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 app.use(cors());
 app.use(express.json());
 
 // Use the users routes
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello, there!')
