@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
     );
 
     // Send the token back to the client
-    res.json({ token });
+    res.json({ seccess: true, token: token });
 });
 
 module.exports = router;
