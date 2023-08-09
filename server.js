@@ -19,14 +19,27 @@ const io = socketIo(server, {
 io.on('connection', (socket) => {
     console.log('a user connected');
 
-    socket.on('chat message', (msg) => {
-        io.emit('chat message', msg); 
+    socket.on('join room', (roomId) => {
+        socket.join(roomId);
+    });
+
+    socket.on('chat message', async (data) => {
+        const { content, sender, room } = data;
+
+        const newMessage = new Message({ content, sender, room });
+        try {
+            await newMessage.save();
+            io.to(room).emit('chat message', newMessage); // send message only to the specific room
+        } catch (error) {
+            console.error("Error saving message:", error);
+        }
     });
 
     socket.on('disconnect', () => {
-        console.log('user disconnected');
+        console.log('a user disconnected');
     });
 });
+
 
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
