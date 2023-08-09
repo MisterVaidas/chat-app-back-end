@@ -4,6 +4,8 @@ const socketIo = require('socket.io');
 const cors = require('cors');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const Message = require('./models/Message');
+
 
 const app = express();
 const server = http.createServer(app);
@@ -44,7 +46,6 @@ app.get('/', (req, res) => {
   res.send('Hello, there!')
 });
 
-// Basic error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something went wrong!');

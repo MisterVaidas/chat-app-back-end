@@ -4,6 +4,7 @@ const User = require('../models/User');
 
 // Register new user
 router.post('/register', async (req, res) => {
+    console.log("Incoming registration request:", req.body);
     const { username, password } = req.body;
 
     // Input validation
